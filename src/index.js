@@ -48,9 +48,44 @@ const pizzaApiData = [
   },
 ];
 
+function Header() {}
+function Menu(props) {
+  return (
+    <div className="col-6">
+      <div className="row">
+        <img src={props.obj.photoName} alt="pizza pics" className="col-6" />
+        <div className="col-6">
+          <h2 className="">{props.obj.name}</h2>
+          <p className="">{props.obj.ingredients}</p>
+          <p>{props.obj.price}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Footer() {}
+
+// Rendering all other components and display it to the user
+function App() {
+  return (
+    <div className="row ">
+      <Header />
+      {pizzaData.map(data => (
+        <Menu obj={data} key={data.name} />
+      ))}
+
+      <Footer />
+    </div>
+  );
+}
+
 // React v18
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<div>hi</div>);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
 // React before 18
 // ReactDOM.render(<App />, document.getElementById("root"));
