@@ -3,6 +3,37 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import pizzaData from './data';
 
+// This is the pizza component
+function Pizza({propsObj}) {
+  return (
+    <div className="col-md-6">
+      <div className={`row my-4 pizza ${propsObj.soldOut ? 'sold-out' : ''} `}>
+        <img src={propsObj.photoName} alt="pizza pics" className="col-6" />
+        <div className="col-6 my-md-auto">
+          <h3>{propsObj.name}</h3>
+          <p className="w-50 fw-italics">{propsObj.ingredients}</p>
+          <span className="mt-4">
+            {propsObj.soldOut ? 'SOLD OUT' : propsObj.price}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// The ordering hour component
+function Order({closeHour, openHour}) {
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
+
 function Header() {
   return (
     <header className="header text-uppercase text-center">
@@ -10,18 +41,22 @@ function Header() {
     </header>
   );
 }
-function Menu(props) {
+function Menu() {
   return (
-    <div className="col-md-6">
-      <div className="row my-4 ">
-        <img src={props.obj.photoName} alt="pizza pics" className="col-6" />
-        <div className="col-6 my-md-auto">
-          <h3 className="">{props.obj.name}</h3>
-          <p className="">{props.obj.ingredients}</p>
-          <span>{props.obj.soldOut ? 'SOLD OUT' : props.obj.price}</span>
-        </div>
-      </div>
-    </div>
+    <main className="menu row mx-auto w-75">
+      <h2 className="my-5 text-center mx-auto w-50">Our menu</h2>
+
+      <>
+        <p className="fs-3 text-center">
+          Authentic Italian cuisine. 6 creative dishes to choose from. All from
+          our stone oven, all organic, all delicious.
+        </p>
+        {/* calling the pizza component */}
+        {pizzaData.map(data => (
+          <Pizza propsObj={data} key={data.name} />
+        ))}
+      </>
+    </main>
   );
 }
 function Footer() {
@@ -42,27 +77,13 @@ function Footer() {
     </footer>
   );
 }
-function Order({closeHour, openHour}) {
-  return (
-    <div className="order">
-      <p>
-        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
-        online.
-      </p>
-      <button className="btn">Order</button>
-    </div>
-  );
-}
 
 // Rendering all other components and display it to the user
 function App() {
   return (
-    <div className="container row mx-auto w-75">
+    <div className="container ">
       <Header />
-      {pizzaData.map(data => (
-        <Menu obj={data} key={data.name} />
-      ))}
-
+      <Menu />
       <Footer />
     </div>
   );
